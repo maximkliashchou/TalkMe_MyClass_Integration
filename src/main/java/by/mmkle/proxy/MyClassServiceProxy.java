@@ -1,13 +1,7 @@
 package by.mmkle.proxy;
 
-import by.mmkle.bean.User;
-import feign.Body;
-import feign.Headers;
-import feign.Param;
 import org.json.simple.JSONObject;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

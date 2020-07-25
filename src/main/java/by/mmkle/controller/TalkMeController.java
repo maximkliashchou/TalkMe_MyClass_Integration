@@ -24,27 +24,8 @@ public class TalkMeController {
     @Autowired
     private TalkMeService talkMeService;
 
-    @Autowired
-    private TalkMeServiceProxy talkMeServiceProxy;
-
     @GetMapping("/usersTalkMe")
     public List<Result> getAllUsersFromTalkMe() throws IOException, ParseException {
-        JSONObject result = talkMeServiceProxy.getUsers(talkMeService.getBody(), talkMeService.getToken());
-        Object obj = new JSONParser().parse(result.toJSONString());
-        JSONObject jsonObject = (JSONObject) obj;
-        JSONArray resultList = (JSONArray) jsonObject.get("result");
-
-        Iterator<JSONObject> iterator = resultList.iterator();
-        List<Result> resultList2 = new ArrayList<>();
-        while (iterator.hasNext()) {
-            iterator.forEachRemaining(el -> {
-                resultList2.add(Result.builder()
-                    .email(String.valueOf(el.get("email")))
-                    .name(String.valueOf(el.get("name")))
-                    .phone(String.valueOf(el.get("phone")))
-                    .build());
-            });
-        }
-        return resultList2;
+        return talkMeService.getAllUsersFromTalkMe();
     }
 }

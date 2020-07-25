@@ -19,33 +19,12 @@ import java.util.List;
 
 @RestController
 public class MyClassController {
-    @Autowired
-    private MyClassServiceProxy myClassServiceProxy;
 
     @Autowired
     private MyClassService myClassService;
 
     @GetMapping("/users")
     public List<User> getAllUser() throws IOException, ParseException {
-        String token = myClassService.getToken();
-        JSONObject result = myClassServiceProxy.getAllUser(token);
-
-        Object obj = new JSONParser().parse(result.toJSONString());
-        JSONObject jsonObject = (JSONObject) obj;
-        JSONArray userList = (JSONArray) jsonObject.get("users");
-
-        Iterator<JSONObject> iterator = userList.iterator();
-        List<User> userList2 = new ArrayList<>();
-        while (iterator.hasNext()) {
-            iterator.forEachRemaining(el -> {
-                userList2.add(User.builder()
-                        .email(String.valueOf(el.get("name")))
-                        .name(String.valueOf(el.get("name")))
-                        .phone(String.valueOf(el.get("phone")))
-                        .build());
-
-            });
-        }
-        return userList2;
+        return myClassService.getAllUser();
     }
 }

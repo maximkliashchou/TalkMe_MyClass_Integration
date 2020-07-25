@@ -8,6 +8,8 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -27,12 +29,18 @@ public class TalkMeService {
         return "4e48gxhw1rq8mzsrl0ylfnup1uuj3x43qvq2c7oc3q4i8bn0udic525ruirmuyao";
     }
 
+    public static String getNewDay(){
+        return LocalDateTime.now().format(DateTimeFormatter.ISO_DATE);
+    }
+
     public String getBody(){
         return "{\n" +
                 "  \"dateRange\": {\n" +
-                "    \"start\": \"2020-07-23\",\n" +
-                "    \"stop\": \"2020-07-23\"\n" +
+                "    \"start\": \"" + getNewDay() + "\",\n" +
+                "    \"stop\": \"" + getNewDay() + "\"\n" +
                 "  }\n" +
                 "}";
     }
+
+
 }

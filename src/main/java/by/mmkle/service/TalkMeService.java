@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class TalkMeService {
@@ -39,13 +40,21 @@ public class TalkMeService {
 
         Iterator<JSONObject> iterator = resultList.iterator();
         List<Result> resultList2 = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         while (iterator.hasNext()) {
             iterator.forEachRemaining(el -> {
+                final String[] time = new String[1];
+                JSONArray messageList = (JSONArray) el.get("messages");
+                Iterator<JSONObject> messageIterator = messageList.iterator();
+                messageIterator.forEachRemaining(message -> {
+                    time[0] = ((String) message.get("dateTime"));
+                });
                 resultList2.add(Result.builder()
                         .email(String.valueOf(el.get("email")))
                         .name(String.valueOf(el.get("name")))
                         .phone(String.valueOf(el.get("phone")))
-                        .time((LocalDateTime) ((JSONObject) el.get("messages")).get("dateTime"))
+                        .time(LocalDateTime.parse(time[0], formatter))
                         .build());
             });
         }

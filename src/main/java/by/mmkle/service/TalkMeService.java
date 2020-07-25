@@ -1,6 +1,5 @@
 package by.mmkle.service;
 
-import by.mmkle.bean.User;
 import by.mmkle.proxy.TalkMeServiceProxy;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Service
 public class TalkMeService {

@@ -38,13 +38,10 @@ public class MyClassController {
         List<User> userList2 = new ArrayList<>();
         while (iterator.hasNext()) {
             iterator.forEachRemaining(el -> {
-                String phoneNumber = String.valueOf(el.get("phone"));
-                String name = String.valueOf(el.get("name"));
-                String email = String.valueOf(el.get("email"));
                 userList2.add(User.builder()
-                        .email(email)
-                        .name(name)
-                        .phone(phoneNumber)
+                        .email(String.valueOf(el.get("name")))
+                        .name(String.valueOf(el.get("name")))
+                        .phone(String.valueOf(el.get("phone")))
                         .build());
 
             });

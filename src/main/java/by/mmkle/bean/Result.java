@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +21,10 @@ public class Result {
 //    private Integer searchId;
 //    private String login;
 //    private String clientId;
-    private String name;
-    private String phone;
-    private String email;
+        private String name;
+        private String phone;
+        private String email;
+        private LocalDateTime time;
 //    private String country;
 //    private String city;
 //    private Object firstVisit;

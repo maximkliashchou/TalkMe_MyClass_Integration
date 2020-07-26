@@ -20,10 +20,10 @@ public class MyClassService {
     private MyClassServiceProxy myClassServiceProxy;
 
     public String getToken() throws ParseException {
-        String body = "{\"apiKey\": \"avJLB4NIa3o6fEaTrJp48E06cFApHtDRODKDioz9u8RgodO8Hr\"}";
-        JSONObject result = myClassServiceProxy.getToken(body);
-        Object obj = new JSONParser().parse(result.toJSONString());
+        String bodyForNewToken = "{\"apiKey\": \"avJLB4NIa3o6fEaTrJp48E06cFApHtDRODKDioz9u8RgodO8Hr\"}";
+        Object obj = new JSONParser().parse(myClassServiceProxy.getToken(bodyForNewToken).toJSONString());
         JSONObject jo = (JSONObject)obj;
+        System.out.println((String) jo.get("accessToken"));
         return (String) jo.get("accessToken");
     }
 
@@ -32,19 +32,18 @@ public class MyClassService {
     }
 
     public void createUser(User user) throws ParseException {
-        String body = "{\"name\": \"" + user.getName() + "\"}";
-        String token = getToken();
-        JSONObject result = myClassServiceProxy.createUser(token, body);
-        Object obj = new JSONParser().parse(result.toJSONString());
-        JSONObject jo = (JSONObject)obj;
-        user.setId((Long) jo.get("id"));
-        System.out.println(user);
+        String body = "{\n" +
+                "  \"name\": \""+user.getName()+"\",\n" +
+                "  \"email\": \""+user.getEmail()+"\",\n" +
+                "  \"clientStateId\": \""+ 62148 +"\",\n" +
+                "  \"phone\": \""+user.getPhone()+"\"\n" +
+                "}";
+        myClassServiceProxy.createUser(getToken(), body);
     }
 
     public void updateUser(User user) throws ParseException {
         String body = "{\"name\": \""+ user.getName() +"\",\"email\": \""+user.getEmail()+"\"}";
-        String token = getToken();
-        myClassServiceProxy.updateUser(token, body, user.getId());
+        myClassServiceProxy.updateUser(getToken(), body, user.getId());
     }
 
     public List<User> getAllUser() throws IOException, ParseException {
@@ -53,19 +52,24 @@ public class MyClassService {
         Object obj = new JSONParser().parse(result.toJSONString());
         JSONObject jsonObject = (JSONObject) obj;
         JSONArray userList = (JSONArray) jsonObject.get("users");
-
-        Iterator<JSONObject> iterator = userList.iterator();
-        List<User> userList2 = new ArrayList<>();
-        while (iterator.hasNext()) {
-            iterator.forEachRemaining(el -> {
-                userList2.add(User.builder()
-                        .email(String.valueOf(el.get("name")))
+        Iterator<JSONObject> iteratorForUserListFromMyClass = userList.iterator();
+        List<User> newUserListAfterRefactoring = new ArrayList<>();
+        while (iteratorForUserListFromMyClass.hasNext()) {
+            iteratorForUserListFromMyClass.forEachRemaining(el -> {
+                newUserListAfterRefactoring.add(User.builder()
+                        .email(String.valueOf(el.get("email")))
                         .name(String.valueOf(el.get("name")))
                         .phone(String.valueOf(el.get("phone")))
+                        .id(Long.valueOf(String.valueOf(el.get("id"))))
                         .build());
-
             });
         }
-        return userList2;
+        return newUserListAfterRefactoring;
     }
+
+    public void updateUserStatus(User user) throws ParseException {
+        String body = "{\"statusId\": "+ 62149 +",\"statusChangeReasonId\": "+ 22 +"}";
+        myClassServiceProxy.updateUserStatus(getToken(), body, user.getId());
+    }
+
 }

@@ -30,7 +30,7 @@ public class InitializationService {
                 LocalDateTime messageTime = allUsersFromTalkMe.get(i).getTime();
                 LocalDateTime timeNow = LocalDateTime.now();
                 Duration duration = Duration.between(messageTime,timeNow);
-                if (duration.toMillis() >= 100) {
+                if (duration.toMinutes() >= 5) {
                     possibleUser.add(User.builder()
                             .name(allUsersFromTalkMe.get(i).getName())
                             .email(allUsersFromTalkMe.get(i).getEmail())
@@ -54,7 +54,7 @@ public class InitializationService {
                     myClassService.updateUserStatus(possibleUser.get(i));
                 }
             }
-            Thread.sleep(1000);
+            Thread.sleep(30000);
         }
     }
 }

@@ -49,7 +49,7 @@ public class MyClassService {
     }
 
     public void updateUserStatus(User user) throws ParseException {
-        myClassServiceProxy.updateUserStatus(getToken(), generateBodyForUpdateUserStatus(user), user.getId());
+        myClassServiceProxy.updateUserStatus(getToken(), generateBodyForUpdateUserStatus(), user.getId());
     }
 
     public String generateBodyForCreatingNewUser(User user){
@@ -61,9 +61,8 @@ public class MyClassService {
 
     }
 
-    public String generateBodyForUpdateUserStatus(User user){
-        return "{\"statusId\": "+ 62149 +",\"statusChangeReasonId\": "+ 22 +"}";
-    }
+    public String generateBodyForUpdateUserStatus(){
+        return "{\"statusId\": "+ 62149 +",\"statusChangeReasonId\": "+ 22 +"}";}
 
     public String getDefaultEmail(String email){
         return (email == "null") ? "" : "  \"email\": \""+email+"\",\n";

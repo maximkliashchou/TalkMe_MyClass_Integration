@@ -21,9 +21,7 @@ public class MyClassService {
 
     public String getToken() throws ParseException {
         String bodyForNewToken = "{\"apiKey\": \"avJLB4NIa3o6fEaTrJp48E06cFApHtDRODKDioz9u8RgodO8Hr\"}";
-        Object obj = new JSONParser().parse(myClassServiceProxy.getToken(bodyForNewToken).toJSONString());
-        JSONObject jo = (JSONObject)obj;
-        System.out.println((String) jo.get("accessToken"));
+        JSONObject jo = (JSONObject)new JSONParser().parse(myClassServiceProxy.getToken(bodyForNewToken).toJSONString());
         return (String) jo.get("accessToken");
     }
 
@@ -35,7 +33,7 @@ public class MyClassService {
         String body = "{\n" +
                 "  \"name\": \""+user.getName()+"\",\n" +
                 "  \"email\": \""+user.getEmail()+"\",\n" +
-                "  \"clientStateId\": \""+ 62148 +"\",\n" +
+                "  \"clientStateId\": \"null\",\n" +
                 "  \"phone\": \""+user.getPhone()+"\"\n" +
                 "}";
         myClassServiceProxy.createUser(getToken(), body);

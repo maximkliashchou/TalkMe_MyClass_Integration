@@ -29,16 +29,14 @@ public class TalkMeService {
         return String.valueOf(jo.get("result"));
     }
 
-
     public List<Result> getAllUsersFromTalkMe() throws IOException, ParseException {
         JSONObject result = talkMeServiceProxy.getUsers(getBody(), getToken());
         Object obj = new JSONParser().parse(result.toJSONString());
         JSONObject jsonObject = (JSONObject) obj;
         JSONArray resultList = (JSONArray) jsonObject.get("result");
-        //JSONArray messagesList = (JSONArray)((JSONObject) jsonObject.get("result")).get("messages");
 
         Iterator<JSONObject> iterator = resultList.iterator();
-        List<Result> resultList2 = new ArrayList<>();
+        List<Result> resultListFromTalkMe = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         while (iterator.hasNext()) {
@@ -49,7 +47,7 @@ public class TalkMeService {
                 messageIterator.forEachRemaining(message -> {
                     time[0] = ((String) message.get("dateTime"));
                 });
-                resultList2.add(Result.builder()
+                resultListFromTalkMe.add(Result.builder()
                         .email(String.valueOf(el.get("email")))
                         .name(String.valueOf(el.get("name")))
                         .phone(String.valueOf(el.get("phone")))
@@ -57,7 +55,7 @@ public class TalkMeService {
                         .build());
             });
         }
-        return resultList2;
+        return resultListFromTalkMe;
     }
 
     public String getToken(){

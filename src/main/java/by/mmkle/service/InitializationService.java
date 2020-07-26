@@ -23,27 +23,27 @@ public class InitializationService {
 
     public void initialize() throws IOException, ParseException, InterruptedException {
         while(true){
-            List<Result> resultList = talkMeService.getAllUsersFromTalkMe();
-            List<User> userList = myClassService.getAllUser();
+            List<Result> allUsersFromTalkMe = talkMeService.getAllUsersFromTalkMe();
+            List<User> allUsersFromMyClass = myClassService.getAllUser();
             List<User> possibleUser = new ArrayList<>();
-            for (int i = 0; i < resultList.size(); i++){
-                LocalDateTime messageTime = resultList.get(i).getTime();
+            for (int i = 0; i < allUsersFromTalkMe.size(); i++){
+                LocalDateTime messageTime = allUsersFromTalkMe.get(i).getTime();
                 LocalDateTime timeNow = LocalDateTime.now();
                 Duration duration = Duration.between(messageTime,timeNow);
                 if (duration.toMinutes() <= 5) {
                     possibleUser.add(User.builder()
-                            .name(resultList.get(i).getName())
-                            .email(resultList.get(i).getEmail())
-                            .phone(resultList.get(i).getPhone())
+                            .name(allUsersFromTalkMe.get(i).getName())
+                            .email(allUsersFromTalkMe.get(i).getEmail())
+                            .phone(allUsersFromTalkMe.get(i).getPhone())
                             .build()
                     );
                 }
             }
             for (int i = 0; i < possibleUser.size(); i++) {
                 boolean flag = false;
-                for (int j = 0; j < userList.size(); j++) {
-                    if (possibleUser.get(i).getPhone().equals(userList.get(j).getPhone())
-                            || possibleUser.get(i).getEmail().equals(userList.get(j).getEmail())){
+                for (int j = 0; j < allUsersFromMyClass.size(); j++) {
+                    if (possibleUser.get(i).getPhone().equals(allUsersFromMyClass.get(j).getPhone())
+                            || possibleUser.get(i).getEmail().equals(allUsersFromMyClass.get(j).getEmail())){
                         flag = true;
                         break;
                     }

@@ -22,11 +22,12 @@ public class InitializationService {
     private TalkMeService talkMeService;
 
     public void initialize() throws IOException, ParseException, InterruptedException {
-        while(true){
+        while(true) {
             List<Result> allUsersFromTalkMe = talkMeService.getAllUsersFromTalkMe();
             List<User> allUsersFromMyClass = myClassService.getAllUser();
             List<User> possibleUser = new ArrayList<>();
-            for (int i = 0; i < allUsersFromTalkMe.size(); i++){
+
+            for (int i = 0; i < allUsersFromTalkMe.size(); i++) {
                 LocalDateTime messageTime = allUsersFromTalkMe.get(i).getTime();
                 LocalDateTime timeNow = LocalDateTime.now();
                 Duration duration = Duration.between(messageTime,timeNow);
@@ -39,22 +40,31 @@ public class InitializationService {
                     );
                 }
             }
-            for (int i = 0; i < possibleUser.size(); i++) {
+
+            for (Result userTalk : allUsersFromTalkMe) {
                 boolean flag = false;
-                for (int j = 0; j < allUsersFromMyClass.size(); j++) {
-                    if (possibleUser.get(i).getPhone().equals(allUsersFromMyClass.get(j).getPhone())
-                            || possibleUser.get(i).getEmail().equals(allUsersFromMyClass.get(j).getEmail())){
+                for (User userMyClass : allUsersFromMyClass) {
+                    if(userMyClass.getPhone().equals(userTalk.getPhone()) || userTalk.getEmail().equals(userMyClass.getEmail())) {
                         flag = true;
                         break;
                     }
                 }
-                if (!flag) {
-                    myClassService.createUser(possibleUser.get(i));
-                } else {
-                    myClassService.updateUserStatus(possibleUser.get(i));
+
+                User user = new User();
+                user.builder()
+                        .name(userTalk.getName())
+                        .email(userTalk.getEmail())
+                        .phone(userTalk.getPhone())
+                        .build();
+
+                if(flag) {
+                    myClassService.createUser(user);
+                }
+                else {
+                    myClassService.updateUserStatus(user.getId());
                 }
             }
-            //Thread.sleep(30000);
+            Thread.sleep(30000);
         }
     }
 }

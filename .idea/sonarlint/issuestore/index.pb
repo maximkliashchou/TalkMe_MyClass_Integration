@@ -1,0 +1,27 @@
+
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+a
+1src/main/java/by/mmkle/service/TalkMeService.java,1\5\15a99a028027fdfa6a1b24a797f7931f20cd1e72
+g
+7src/main/java/by/mmkle/controller/TalkMeController.java,b\2\b28238c6f5c9c0ec8ec62795748a9a81996e6670
+W
+'src/main/java/by/mmkle/bean/Result.java,f\c\fcabade9a3374cc8c7135fc926e8e0dbf248ffa7
+h
+8src/main/java/by/mmkle/controller/MyClassController.java,1\d\1d56226260978da9cb57d9ffd77953dc2e9ce006
+^
+.src/main/java/by/mmkle/MyClassApplication.java,b\8\b8ec05e72de5053c95a80412d42f6c4b7897806c
+X
+(src/main/java/by/mmkle/bean/Message.java,a\4\a499416bb0052e6abdd3a466b346fc5c08be6999
+Z
+*src/main/java/by/mmkle/bean/Attribute.java,1\9\19bfdb65a426b50071d05d8fb281861e4ba1356f
+d
+4src/main/java/by/mmkle/proxy/TalkMeServiceProxy.java,1\a\1aa92bc15e0fc4a7e4107836a375f7fa648fead5
+i
+9src/main/java/by/mmkle/service/InitializationService.java,5\4\5456119e785b27f30c361b81a0b964832a804203
+e
+5src/main/java/by/mmkle/proxy/MyClassServiceProxy.java,6\3\6382a51a4d1869ebe4fa327dc0bd20e378817caa
+U
+%src/main/java/by/mmkle/bean/User.java,6\6\6679e57d9e1897f90399df32025c46cee5441115
+b
+2src/main/java/by/mmkle/service/MyClassService.java,8\c\8c59fc357a22c988753ae01e3a97d412fffda6d4

@@ -48,8 +48,8 @@ public class MyClassService {
         return newUserListAfterRefactoring;
     }
 
-    public void updateUserStatus(User user) throws ParseException {
-        myClassServiceProxy.updateUserStatus(getToken(), generateBodyForUpdateUserStatus(), user.getId());
+    public void updateUserStatus(int userId) throws ParseException {
+        myClassServiceProxy.updateUserStatus(getToken(), generateBodyForUpdateUserStatus(), userId);
     }
 
     public String generateBodyForCreatingNewUser(User user){

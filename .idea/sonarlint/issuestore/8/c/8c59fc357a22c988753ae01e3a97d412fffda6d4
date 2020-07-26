@@ -1,0 +1,9 @@
+
+N
+java:S1602V",Remove useless curly braces around statement(‰¼Ãûÿÿÿÿ8ÔÛÖ¸.
+W
+java:S2209C"5Change this instance-reference to a static reference.(õö£øÿÿÿÿ8¥ŒºØ¸.
+
+java:S1130;"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(«¶€ùıÿÿÿÿ8¹š¯Ø¸.
+F
+java:S1144"0Remove this unused private "revokeToken" method.(–¯¼İ

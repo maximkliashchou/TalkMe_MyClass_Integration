@@ -36,7 +36,7 @@ public class TalkMeService {
         JSONArray resultList = (JSONArray) jsonObject.get("result");
 
         Iterator<JSONObject> iterator = resultList.iterator();
-        List<Result> resultListFromTalkMe = new ArrayList<>();
+        List<Result> results = new ArrayList<>();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         while (iterator.hasNext()) {
@@ -47,7 +47,7 @@ public class TalkMeService {
                 messageIterator.forEachRemaining(message -> {
                     time[0] = ((String) message.get("dateTime"));
                 });
-                resultListFromTalkMe.add(Result.builder()
+                results.add(Result.builder()
                         .email(String.valueOf(el.get("email")))
                         .name(String.valueOf(el.get("name")))
                         .phone(String.valueOf(el.get("phone")))
@@ -55,7 +55,7 @@ public class TalkMeService {
                         .build());
             });
         }
-        return resultListFromTalkMe;
+        return results;
     }
 
     public String getToken(){

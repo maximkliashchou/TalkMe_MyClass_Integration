@@ -13,7 +13,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 public class Message {
-    private Integer id;
+    private int id;
     private String operator;
     private String whoSend;
     private String text;

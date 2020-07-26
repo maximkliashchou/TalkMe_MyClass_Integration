@@ -22,10 +22,10 @@ public interface MyClassServiceProxy {
     @PostMapping(value = "/v1/company/users/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     JSONObject updateUser(@RequestHeader("x-access-token") String token,
                           @RequestBody String body,
-                          @RequestParam("userId") Long id);
+                          @RequestParam("userId") int id);
 
-    @PostMapping(value = "/v1/company/users/{userId}/status", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/v1/company/users/{userId}status", consumes = MediaType.APPLICATION_JSON_VALUE)
     JSONObject updateUserStatus(@RequestHeader("x-access-token") String token,
                                 @RequestBody String body,
-                                @PathVariable Long userId);
+                                @PathVariable int userId);
 }

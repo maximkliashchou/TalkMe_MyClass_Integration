@@ -20,7 +20,8 @@ public class MyClassService {
     private MyClassServiceProxy myClassServiceProxy;
 
     public String getToken() throws ParseException {
-        String bodyForNewToken = "{\"apiKey\": \"avJLB4NIa3o6fEaTrJp48E06cFApHtDRODKDioz9u8RgodO8Hr\"}";
+        //String bodyForNewToken = "{\"apiKey\": \"avJLB4NIa3o6fEaTrJp48E06cFApHtDRODKDioz9u8RgodO8Hr\"}";
+        String bodyForNewToken = "{\"apiKey\": \"YNPbbSyOeITHC3dsEmDgWIn3kldlLbGHvu9X7uNL75xmK9Z94u\"}";
         JSONObject jo = (JSONObject)new JSONParser().parse(myClassServiceProxy.getToken(bodyForNewToken).toJSONString());
         return (String) jo.get("accessToken");
     }
@@ -30,19 +31,14 @@ public class MyClassService {
     }
 
     public void createUser(User user) throws ParseException {
-        String body = "{\n" +
-                "  \"name\": \""+user.getName()+"\",\n" +
-                "  \"email\": \""+user.getEmail()+"\",\n" +
-                "  \"clientStateId\": \"null\",\n" +
-                "  \"phone\": \""+user.getPhone()+"\"\n" +
-                "}";
-        myClassServiceProxy.createUser(getToken(), body);
+        myClassServiceProxy.createUser(getToken(), generateBodyForCreatingNewUser(user));
     }
 
+    /*
     public void updateUser(User user) throws ParseException {
         String body = "{\"name\": \""+ user.getName() +"\",\"email\": \""+user.getEmail()+"\"}";
         myClassServiceProxy.updateUser(getToken(), body, user.getId());
-    }
+    }*/
 
     public List<User> getAllUser() throws IOException, ParseException {
         JSONObject result = myClassServiceProxy.getAllUser(getToken());
@@ -58,7 +54,7 @@ public class MyClassService {
                         .email(String.valueOf(el.get("email")))
                         .name(String.valueOf(el.get("name")))
                         .phone(String.valueOf(el.get("phone")))
-                        .id(Long.valueOf(String.valueOf(el.get("id"))))
+                        .id(Integer.valueOf(String.valueOf(el.get("id"))))
                         .build());
             });
         }
@@ -66,8 +62,28 @@ public class MyClassService {
     }
 
     public void updateUserStatus(User user) throws ParseException {
-        String body = "{\"statusId\": "+ 62149 +",\"statusChangeReasonId\": "+ 22 +"}";
-        myClassServiceProxy.updateUserStatus(getToken(), body, user.getId());
+        myClassServiceProxy.updateUserStatus(getToken(), generateBodyForUpdateUserStatus(user), user.getId());
+    }
+
+    public String generateBodyForCreatingNewUser(User user){
+        return "{\n" +
+                "  \"name\": \""+user.getName()+"\",\n" +
+                getDefaultEmail(user.getEmail()) +
+                "  \"clientStateId\": null,\n" +
+                getDefaultPhone(user.getPhone()) + "}";
+
+    }
+
+    public String generateBodyForUpdateUserStatus(User user){
+        return "{\"statusId\": "+ 62149 +",\"statusChangeReasonId\": "+ 22 +"}";
+    }
+
+    public String getDefaultEmail(String email){
+        return (email == "null") ? "" : "  \"email\": \""+email+"\",\n";
+    }
+
+    public String getDefaultPhone(String phone){
+        return  (phone == "null") ? "" :  "  \"phone\": \""+phone+"\"\n";
     }
 
 }

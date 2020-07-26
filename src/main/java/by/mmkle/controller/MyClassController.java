@@ -1,6 +1,7 @@
 package by.mmkle.controller;
 
 import by.mmkle.bean.User;
+import by.mmkle.service.InitializationService;
 import by.mmkle.service.MyClassService;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;

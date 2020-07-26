@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,46 +22,30 @@ public class InitializationService {
         while(true) {
             List<Result> allUsersFromTalkMe = talkMeService.getAllUsersFromTalkMe();
             List<User> allUsersFromMyClass = myClassService.getAllUser();
-            List<User> possibleUser = new ArrayList<>();
 
-            for (int i = 0; i < allUsersFromTalkMe.size(); i++) {
-                LocalDateTime messageTime = allUsersFromTalkMe.get(i).getTime();
-                LocalDateTime timeNow = LocalDateTime.now();
-                Duration duration = Duration.between(messageTime,timeNow);
-                if (duration.toMillis() <= 10000) {
-                    possibleUser.add(User.builder()
-                            .name(allUsersFromTalkMe.get(i).getName())
-                            .email(allUsersFromTalkMe.get(i).getEmail())
-                            .phone(allUsersFromTalkMe.get(i).getPhone())
-                            .build()
-                    );
-                }
-            }
-
-            for (Result userTalk : allUsersFromTalkMe) {
+            for (Result userTalkMe : allUsersFromTalkMe) {
                 boolean flag = false;
                 for (User userMyClass : allUsersFromMyClass) {
-                    if(userMyClass.getPhone().equals(userTalk.getPhone()) || userTalk.getEmail().equals(userMyClass.getEmail())) {
+                    if (userTalkMe.getPhone().equals(userMyClass.getPhone())) {
+                        try {
+                            myClassService.updateUserStatus(userMyClass.getId());
+                        } catch (Exception ex) {
+                            System.out.println("Ne bei Max");
+                        }
                         flag = true;
                         break;
                     }
                 }
-
-                User user = new User();
-                user.builder()
-                        .name(userTalk.getName())
-                        .email(userTalk.getEmail())
-                        .phone(userTalk.getPhone())
-                        .build();
-
-                if(flag) {
+                if (!flag) {
+                    User user = User.builder()
+                            .name(userTalkMe.getName())
+                            .phone(userTalkMe.getPhone())
+                            .email(userTalkMe.getEmail())
+                            .build();
                     myClassService.createUser(user);
                 }
-                else {
-                    myClassService.updateUserStatus(user.getId());
-                }
             }
-            Thread.sleep(30000);
+            Thread.sleep(3600);
         }
     }
 }

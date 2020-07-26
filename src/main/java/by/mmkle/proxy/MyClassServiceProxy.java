@@ -24,7 +24,7 @@ public interface MyClassServiceProxy {
                           @RequestBody String body,
                           @RequestParam("userId") int id);
 
-    @PostMapping(value = "/v1/company/users/{userId}status", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/v1/company/users/{userId}/status", consumes = MediaType.APPLICATION_JSON_VALUE)
     JSONObject updateUserStatus(@RequestHeader("x-access-token") String token,
                                 @RequestBody String body,
                                 @PathVariable int userId);

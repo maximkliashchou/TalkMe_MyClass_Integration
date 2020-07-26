@@ -22,16 +22,8 @@ public class TalkMeService {
     @Autowired
     private TalkMeServiceProxy talkMeServiceProxy;
 
-    public String getAllMessages() throws ParseException {
-        JSONObject result = talkMeServiceProxy.getUsers(getBody(), getToken());
-        Object obj = new JSONParser().parse(result.toJSONString());
-        JSONObject jo = (JSONObject)obj;
-        return String.valueOf(jo.get("result"));
-    }
-
     public List<Result> getAllUsersFromTalkMe() throws IOException, ParseException {
-        JSONObject result = talkMeServiceProxy.getUsers(getBody(), getToken());
-        Object obj = new JSONParser().parse(result.toJSONString());
+        Object obj = new JSONParser().parse(talkMeServiceProxy.getUsers(getBodyForNewDay(), getToken()).toJSONString());
         JSONObject jsonObject = (JSONObject) obj;
         JSONArray resultList = (JSONArray) jsonObject.get("result");
 
@@ -66,7 +58,7 @@ public class TalkMeService {
         return LocalDateTime.now().format(DateTimeFormatter.ISO_DATE);
     }
 
-    public String getBody(){
+    public String getBodyForNewDay(){
         return "{\n" +
                 "  \"dateRange\": {\n" +
                 "    \"start\": \"" + getNewDay() + "\",\n" +

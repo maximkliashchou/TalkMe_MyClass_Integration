@@ -26,19 +26,9 @@ public class MyClassService {
         return (String) jo.get("accessToken");
     }
 
-    private void revokeToken(String token, String body) {
-        myClassServiceProxy.revokeToken(token, body);
-    }
-
     public void createUser(User user) throws ParseException {
         myClassServiceProxy.createUser(getToken(), generateBodyForCreatingNewUser(user));
     }
-
-    /*
-    public void updateUser(User user) throws ParseException {
-        String body = "{\"name\": \""+ user.getName() +"\",\"email\": \""+user.getEmail()+"\"}";
-        myClassServiceProxy.updateUser(getToken(), body, user.getId());
-    }*/
 
     public List<User> getAllUser() throws IOException, ParseException {
         JSONObject jsonObject = (JSONObject) new JSONParser().parse(myClassServiceProxy.getAllUser(getToken()).toJSONString());

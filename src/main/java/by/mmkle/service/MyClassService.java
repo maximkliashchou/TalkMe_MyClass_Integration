@@ -41,10 +41,7 @@ public class MyClassService {
     }*/
 
     public List<User> getAllUser() throws IOException, ParseException {
-        JSONObject result = myClassServiceProxy.getAllUser(getToken());
-
-        Object obj = new JSONParser().parse(result.toJSONString());
-        JSONObject jsonObject = (JSONObject) obj;
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(myClassServiceProxy.getAllUser(getToken()).toJSONString());
         JSONArray userList = (JSONArray) jsonObject.get("users");
         Iterator<JSONObject> iteratorForUserListFromMyClass = userList.iterator();
         List<User> newUserListAfterRefactoring = new ArrayList<>();

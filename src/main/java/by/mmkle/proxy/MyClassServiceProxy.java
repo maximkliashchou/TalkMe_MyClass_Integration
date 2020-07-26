@@ -5,9 +5,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-
 @FeignClient(name="MY-CLASS-SERVICE-PROXY", url="https://api.moyklass.com")
 public interface MyClassServiceProxy {
     @GetMapping("/v1/company/users")
@@ -26,4 +23,9 @@ public interface MyClassServiceProxy {
     JSONObject updateUser(@RequestHeader("x-access-token") String token,
                           @RequestBody String body,
                           @RequestParam("userId") Long id);
+
+    @PostMapping(value = "/v1/company/users/{userId}/status", consumes = MediaType.APPLICATION_JSON_VALUE)
+    JSONObject updateUserStatus(@RequestHeader("x-access-token") String token,
+                                @RequestBody String body,
+                                @PathVariable Long userId);
 }

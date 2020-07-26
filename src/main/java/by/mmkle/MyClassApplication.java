@@ -1,8 +1,6 @@
 package by.mmkle;
 
-import by.mmkle.bean.User;
 import by.mmkle.service.InitializationService;
-import by.mmkle.service.MyClassService;
 import org.json.simple.parser.ParseException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

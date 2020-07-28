@@ -1,5 +1,6 @@
-package by.mmkle.telegram;
+package by.mmkle.telegram.bot;
 
+import by.mmkle.telegram.dispatcher.RequestDispatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -17,12 +18,11 @@ public class Bot extends TelegramLongPollingBot {
     private String botToken;
 
     @Autowired
-    private BotService botService;
+    private RequestDispatcher requestDispatcher;
 
     @Override
     public void onUpdateReceived(Update update) {
-        String message = update.getMessage().getText();
-        botService.sendMessage(update.getMessage(), message);
+        requestDispatcher.dispatch(update);
     }
 
     @Override

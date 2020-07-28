@@ -2,12 +2,11 @@ package by.mmkle.service;
 
 import by.mmkle.bean.Result;
 import by.mmkle.bean.User;
-import by.mmkle.telegram.BotService;
+import by.mmkle.telegram.dispatcher.RequestDispatcher;
 import by.mmkle.telegram.service.MessageService;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.io.IOException;
 import java.util.List;
@@ -20,9 +19,6 @@ public class InitializationService {
 
     @Autowired
     private TalkMeService talkMeService;
-
-    @Autowired
-    private BotService botService;
 
     @Autowired
     private MessageService messageService;
@@ -38,7 +34,7 @@ public class InitializationService {
                     if (userTalkMe.getPhone().equals(userMyClass.getPhone())) {
                         try {
                             myClassService.updateUserStatus(userMyClass.getId());
-                            botService.sendMessage(new Message(), messageService.getMessageWhereUpdateUser(userMyClass));
+                            messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereUpdateUser(userMyClass));
                         } catch (Exception ex) {
                         }
                         flag = true;
@@ -52,7 +48,7 @@ public class InitializationService {
                             .email(userTalkMe.getEmail())
                             .build();
                     myClassService.createUser(user);
-                    botService.sendMessage(messageService.getMessageWhereCreateNewUser(user));
+                    messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereCreateNewUser(user));
                 }
             }
             Thread.sleep(3600);

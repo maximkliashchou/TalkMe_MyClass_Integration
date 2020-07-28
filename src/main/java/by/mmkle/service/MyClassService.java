@@ -57,7 +57,7 @@ public class MyClassService {
                 "  \"name\": \""+user.getName()+"\",\n" +
                 getDefaultEmail(user.getEmail()) +
                 "  \"clientStateId\": null,\n" +
-                getDefaultPhone(user.getPhone()) + "}";
+                getDefaultPhone(user.getPhone()) + "\n}";
 
     }
 
@@ -65,11 +65,11 @@ public class MyClassService {
         return "{\"statusId\": "+ 62149 +",\"statusChangeReasonId\": "+ 22 +"}";}
 
     public String getDefaultEmail(String email){
-        return (email == "null") ? "" : "  \"email\": \""+email+"\",\n";
+        return (email == null) ? "" : "  \"email\": \""+email+"\",\n";
     }
 
     public String getDefaultPhone(String phone){
-        return  (phone == "null") ? "" :  "  \"phone\": \""+phone+"\"\n";
+        return  (phone == null) ? "" :  "  \"phone\": \""+phone+"\"\n";
     }
 
 }

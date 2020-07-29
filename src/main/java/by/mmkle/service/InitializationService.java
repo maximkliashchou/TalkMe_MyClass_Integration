@@ -24,17 +24,17 @@ public class InitializationService {
     private MessageService messageService;
 
     public void initialize() throws IOException, ParseException, InterruptedException {
+        List<User> allUsersFromMyClass = myClassService.getAllUser();
         while(true) {
             List<Result> allUsersFromTalkMe = talkMeService.getAllUsersFromTalkMe();
-            List<User> allUsersFromMyClass = myClassService.getAllUser();
 
             for (Result userTalkMe : allUsersFromTalkMe) {
                 boolean flag = false;
                 for (User userMyClass : allUsersFromMyClass) {
                     if (userTalkMe.getPhone().equals(userMyClass.getPhone())) {
                         try {
-                            if (!userTalkMe.getTime().equals(userMyClass.getTime())) {
-                                myClassService.updateUserStatus(userMyClass.getId());
+                            if (userTalkMe.getTime().isAfter(userMyClass.getTime()) || userMyClass.getTime() == null) {
+                                userMyClass.setTime(userTalkMe.getTime());
                                 messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereUpdateUser(userTalkMe));
                             }
                         } catch (Exception ex) {
@@ -48,10 +48,12 @@ public class InitializationService {
                     User user = User.builder()
                             .name(userTalkMe.getName())
                             .phone(userTalkMe.getPhone())
-                            .email(userTalkMe.getEmail())
+                            .email("email@gmail.com")
+                            //.email(userTalkMe.getEmail())
                             .time(userTalkMe.getTime())
                             .build();
                     myClassService.createUser(user);
+                    allUsersFromMyClass.add(user);
                     messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereCreateNewUser(userTalkMe));
                 }
             }

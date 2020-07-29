@@ -1,6 +1,7 @@
 
 package by.mmkle.bean;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class User {
     private String name;
     private String email;
     private String phone;
+    private LocalDateTime time;
     private Integer responsibleId;
     private Integer advSourceId;
     private Integer createSourceId;

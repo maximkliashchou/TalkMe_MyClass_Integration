@@ -21,6 +21,7 @@ public class User {
     private Integer advSourceId;
     private Integer createSourceId;
     private Integer clientStateId;
+    private String lastMessage;
     private List<Object> filials = null;
     private List<Object> attributes = null;
     private List<Object> joins = null;

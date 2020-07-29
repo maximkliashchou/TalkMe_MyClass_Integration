@@ -10,6 +10,7 @@ public class StartProcessor implements Processor {
     public String run() {
         return "Привет, для правильной работы мне нужно API сервиса Talk-Me и Мой класс.\n" +
                 "Нажми /talkme а после отправь нам API для сервиса Talk-Me\n" +
-                "Нажми /moyclass а после отправь нам API для сервиса Мой класс\n";
+                "Нажми /myclass а после отправь нам API для сервиса Мой класс\n" +
+                "\nПример: /talkme u8123j124bk34";
     }
 }

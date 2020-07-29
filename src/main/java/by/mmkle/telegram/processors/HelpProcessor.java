@@ -8,6 +8,6 @@ public class HelpProcessor implements Processor {
 
     @Override
     public String run() {
-        return "Помощь";
+        return "Сам себе помоги";
     }
 }

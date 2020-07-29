@@ -33,9 +33,10 @@ public class InitializationService {
                 for (User userMyClass : allUsersFromMyClass) {
                     if (userTalkMe.getPhone().equals(userMyClass.getPhone())) {
                         try {
+                            //messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereUpdateUser(userTalkMe));
                             myClassService.updateUserStatus(userMyClass.getId());
-                            messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereUpdateUser(userMyClass));
                         } catch (Exception ex) {
+
                         }
                         flag = true;
                         break;
@@ -48,7 +49,7 @@ public class InitializationService {
                             .email(userTalkMe.getEmail())
                             .build();
                     myClassService.createUser(user);
-                    messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereCreateNewUser(user));
+                    messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereCreateNewUser(userTalkMe));
                 }
             }
             Thread.sleep(3600);

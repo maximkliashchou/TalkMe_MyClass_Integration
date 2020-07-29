@@ -16,4 +16,5 @@ public class Result {
         private String phone;
         private String email;
         private LocalDateTime time;
+        private String message;
 }

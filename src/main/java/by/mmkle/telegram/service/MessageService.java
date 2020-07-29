@@ -1,5 +1,6 @@
 package by.mmkle.telegram.service;
 
+import by.mmkle.bean.Result;
 import by.mmkle.bean.User;
 import by.mmkle.telegram.bot.Bot;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,15 @@ public class MessageService {
         }
     }
 
-    public String getMessageWhereCreateNewUser(User user){
-        return "СОЗДАН КЛИЕНТ\nВ систему 'Мой класс' был добавлен новый пользователь\n" + "Имя: " +
-                user.getName() + "\nEmail: " + user.getEmail() + "\nТелефон: " + user.getPhone();
+    public String getMessageWhereCreateNewUser(Result result){
+        return "СОЗДАН КЛИЕНТ\nВ систему 'Мой класс' был добавлен новый пользователь\n\n" + "Имя: " +
+                result.getName() + "\nEmail: " + result.getEmail() + "\nТелефон: " + result.getPhone()
+                + "\nПоследнее сообщение: " + result.getMessage() + "\nВремя: " + result.getTime().toString();
     }
 
-    public String getMessageWhereUpdateUser(User user){
-        return "КЛИЕНТ ОБНОВЛЕН\nВ систему 'Мой класс' был обновлен пользователь\n" + "Имя: " +
-                user.getName() + "\nEmail: " + user.getEmail() + "\nТелефон: " + user.getPhone();
+    public String getMessageWhereUpdateUser(Result result){
+        return "ПОВТОРНОЕ ОБРАЩЕНИЕ\nВ системе 'Мой класс' был обновлен пользователь\n\n" + "Имя: " +
+                result.getName() + "\nEmail: " + result.getEmail() + "\nТелефон: " + result.getPhone()
+                + "\nПоследнее сообщение: " + result.getMessage() + "\nВремя: " + result.getTime().toString();
     }
 }

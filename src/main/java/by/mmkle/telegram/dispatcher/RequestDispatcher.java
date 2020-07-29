@@ -1,9 +1,7 @@
 package by.mmkle.telegram.dispatcher;
 
 import by.mmkle.telegram.bot.BotCommand;
-import by.mmkle.telegram.processors.HelpProcessor;
-import by.mmkle.telegram.processors.SettingProcessor;
-import by.mmkle.telegram.processors.StartProcessor;
+import by.mmkle.telegram.processors.*;
 import by.mmkle.telegram.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +13,9 @@ import static by.mmkle.telegram.bot.BotCommand.*;
 @Service
 public class RequestDispatcher {
     public static Long chatId = 0L;
+    public static String ApiTalkMe = new String();
+    public static String ApiMyClass = new String();
+
 
     @Autowired
     private MessageService messageService;
@@ -28,6 +29,12 @@ public class RequestDispatcher {
     @Autowired
     private StartProcessor startProcessor;
 
+    @Autowired
+    private TalkMeProcessor talkMeProcessor;
+
+    @Autowired
+    private MyClassProcessor myClassProcessor;
+
     public void dispatch(Update update) {
         chatId = update.getMessage().getChatId();
         switch (getCommand(update)) {
@@ -40,6 +47,13 @@ public class RequestDispatcher {
             case SETTING:
                 messageService.sendMessage(chatId, settingProcessor.run());
                 break;
+            case TALKME:
+                messageService.sendMessage(chatId, talkMeProcessor.run());
+                break;
+            case MYCLASS:
+                messageService.sendMessage(chatId, myClassProcessor.run());
+                break;
+
         }
     }
 
@@ -54,6 +68,14 @@ public class RequestDispatcher {
                     return START;
                 } else if (msgText.startsWith(SETTING.getCommand())) {
                     return SETTING;
+                } else if (msgText.startsWith(TALKME.getCommand())) {
+                    ApiTalkMe = msgText.substring(8, msgText.length());
+                    //System.out.println("апи для talk-me " + ApiTalkMe);
+                    return TALKME;
+                }else if (msgText.startsWith(MYCLASS.getCommand())) {
+                    ApiMyClass= msgText.substring(9, msgText.length());
+                    //System.out.println("апи для мой класс " + ApiMyClass);
+                    return MYCLASS;
                 }
             }
         }

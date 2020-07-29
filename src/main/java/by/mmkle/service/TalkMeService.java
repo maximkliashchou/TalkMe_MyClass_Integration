@@ -34,16 +34,19 @@ public class TalkMeService {
         while (iterator.hasNext()) {
             iterator.forEachRemaining(el -> {
                 final String[] time = new String[1];
+                final String[] messageFinal = new String[1];
                 JSONArray messageList = (JSONArray) el.get("messages");
                 Iterator<JSONObject> messageIterator = messageList.iterator();
                 messageIterator.forEachRemaining(message -> {
                     time[0] = ((String) message.get("dateTime"));
+                    messageFinal[0] = String.valueOf(message.get("text"));
                 });
                 results.add(Result.builder()
                         .email(String.valueOf(el.get("email")))
                         .name(String.valueOf(el.get("name")))
                         .phone(String.valueOf(el.get("phone")))
                         .time(LocalDateTime.parse(time[0], formatter))
+                        .message(String.valueOf(messageFinal[0]))
                         .build());
             });
         }

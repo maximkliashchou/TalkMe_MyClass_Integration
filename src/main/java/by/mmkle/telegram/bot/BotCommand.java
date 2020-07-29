@@ -4,7 +4,7 @@ public enum BotCommand {
     START("/start"),
     HELP("/help"),
     SETTING("/settings"),
-    MOYCLASS("/moyclass"),
+    MYCLASS("/myclass"),
     TALKME("/talkme"),
     NONE("/none");
 

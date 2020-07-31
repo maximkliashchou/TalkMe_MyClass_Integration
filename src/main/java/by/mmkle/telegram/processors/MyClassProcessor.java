@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 public class MyClassProcessor implements Processor {
     @Override
     public String run() {
-        return "Успешно сохранено!";
+        return "Подключенно!";
     }
 }

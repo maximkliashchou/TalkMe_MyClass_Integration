@@ -35,6 +35,7 @@ public class MessageService {
     public String getMessageWhereCreateNewUser(Result result){
         return "СОЗДАН КЛИЕНТ\nВ систему 'Мой класс' был добавлен новый пользователь\n\n" + "Имя: " +
                 result.getName() + "\nEmail: " + result.getEmail() + "\nТелефон: " + result.getPhone()
+                + "\nИстория обращений - нет"
                 + "\nПоследнее сообщение: " + result.getMessage()
                 + "\nВремя: " + parser.format(result.getTime());
     }

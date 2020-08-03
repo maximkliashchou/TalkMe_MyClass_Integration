@@ -1,6 +1,7 @@
 package by.mmkle.telegram.dispatcher;
 
 import by.mmkle.telegram.bot.BotCommand;
+import by.mmkle.telegram.dao.service.TelegramService;
 import by.mmkle.telegram.processors.*;
 import by.mmkle.telegram.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ public class RequestDispatcher {
     public static String ApiTalkMe = new String();
     public static String ApiMyClass = new String();
 
-
     @Autowired
     private MessageService messageService;
 
@@ -30,31 +30,40 @@ public class RequestDispatcher {
     private StartProcessor startProcessor;
 
     @Autowired
+    private TelegramService telegramService;
+
+    @Autowired
     private TalkMeProcessor talkMeProcessor;
 
     @Autowired
     private MyClassProcessor myClassProcessor;
 
+    @Autowired
+    private NoSubscribeProcessor noSubscribeProcessor;
+
     public void dispatch(Update update) {
         chatId = update.getMessage().getChatId();
-        switch (getCommand(update)) {
-            case HELP:
-                messageService.sendMessage(chatId, helpProcessor.run());
-                break;
-            case START:
-                messageService.sendMessage(chatId, startProcessor.run());
-                break;
-            case SETTING:
-                messageService.sendMessage(chatId, settingProcessor.run());
-                break;
-            case TALKME:
-                messageService.sendMessage(chatId, talkMeProcessor.run());
-                break;
-            case MYCLASS:
-                messageService.sendMessage(chatId, myClassProcessor.run());
-                break;
-
+        telegramService.saveClient(telegramService.buildNewClient(chatId));
+        if(telegramService.getClient(chatId).getTypeSubscribe().equals("Test time")) {
+            switch (getCommand(update)) {
+                case HELP:
+                    messageService.sendMessage(chatId, helpProcessor.run());
+                    break;
+                case START:
+                    messageService.sendMessage(chatId, startProcessor.run());
+                    break;
+                case SETTING:
+                    messageService.sendMessage(chatId, settingProcessor.run());
+                    break;
+                case TALKME:
+                    messageService.sendMessage(chatId, talkMeProcessor.run());
+                    break;
+                case MYCLASS:
+                    messageService.sendMessage(chatId, myClassProcessor.run());
+                    break;
+            }
         }
+        else   messageService.sendMessage(chatId, noSubscribeProcessor.run());
     }
 
     private BotCommand getCommand(Update update) {

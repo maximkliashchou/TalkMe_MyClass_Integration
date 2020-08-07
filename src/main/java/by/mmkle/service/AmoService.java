@@ -20,7 +20,7 @@ public class AmoService {
     private AmoServiceProxy amoServiceProxy;
 
     public List<User> getAllContactsFromAmo() throws ParseException {
-        JSONObject jsonObject = (JSONObject) new JSONParser().parse(amoServiceProxy.getAllContacts().toJSONString());
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(amoServiceProxy.getAllContacts(AmoServiceProxy.token).toJSONString());
         JSONObject embedded = (JSONObject) jsonObject.get("embedded");
         JSONArray contacts = (JSONArray) embedded.get("contacts");
         Iterator<JSONObject> iteratorForUserListFromAmo = contacts.iterator();
@@ -39,7 +39,7 @@ public class AmoService {
     }
 
     public String getInfoAboutAccount() {
-        return amoServiceProxy.getInfo().toString();
+        return amoServiceProxy.getInfo(AmoServiceProxy.token).toString();
     }
 
     public String createBodyForNewUser(User user) {

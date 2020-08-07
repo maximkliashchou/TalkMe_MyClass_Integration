@@ -66,7 +66,7 @@ public class InitializationService {
 
 
 
-    public void initializeForAmoCRM() throws IOException, ParseException, InterruptedException {
+   /* public void initializeForAmoCRM() throws IOException, ParseException, InterruptedException {
         List<User> allUsersFromMyClass = myClassService.getAllUser();
         List<User> allUsersFromMyClass = amoService.getAllContactsFromAmo();
         while(true) {
@@ -104,7 +104,7 @@ public class InitializationService {
             Thread.sleep(3600);
         }
     }
-
+*/
 
 
 

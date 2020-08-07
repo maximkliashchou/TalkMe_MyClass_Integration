@@ -44,13 +44,16 @@ public class RequestDispatcher {
     public void dispatch(Update update) {
         chatId = update.getMessage().getChatId();
         telegramService.saveClient(telegramService.buildNewClient(chatId));
-        if(telegramService.getClient(chatId).getTypeSubscribe().equals("Test time")) {
+        //if(telegramService.getClient(chatId).getTypeSubscribe().equals("Test time")) {
             switch (getCommand(update)) {
                 case HELP:
                     messageService.sendMessage(chatId, helpProcessor.run());
                     break;
                 case START:
-                    messageService.sendMessage(chatId, startProcessor.run());
+                    messageService.sendMessage(chatId, startProcessor.run() +
+                            "\n\nНачало подписки: " + telegramService.getClient(chatId).getStartSubscribe() +
+                            "\nКонец подписки: " + telegramService.getClient(chatId).getEndSubscribe() +
+                            "\nТип подписки: " + telegramService.getClient(chatId).getTypeSubscribe());
                     break;
                 case SETTING:
                     messageService.sendMessage(chatId, settingProcessor.run());
@@ -62,8 +65,8 @@ public class RequestDispatcher {
                     messageService.sendMessage(chatId, myClassProcessor.run());
                     break;
             }
-        }
-        else   messageService.sendMessage(chatId, noSubscribeProcessor.run());
+        //}
+        //else   messageService.sendMessage(chatId, noSubscribeProcessor.run());
     }
 
     private BotCommand getCommand(Update update) {

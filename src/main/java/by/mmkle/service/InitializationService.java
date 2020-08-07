@@ -21,9 +21,12 @@ public class InitializationService {
     private TalkMeService talkMeService;
 
     @Autowired
+    private AmoService amoService;
+
+    @Autowired
     private MessageService messageService;
 
-    public void initialize() throws IOException, ParseException, InterruptedException {
+    public void initializeForMyClass() throws IOException, ParseException, InterruptedException {
         List<User> allUsersFromMyClass = myClassService.getAllUser();
         while(true) {
             List<Result> allUsersFromTalkMe = talkMeService.getAllUsersFromTalkMe();
@@ -60,4 +63,49 @@ public class InitializationService {
             Thread.sleep(3600);
         }
     }
+
+
+
+    public void initializeForAmoCRM() throws IOException, ParseException, InterruptedException {
+        List<User> allUsersFromMyClass = myClassService.getAllUser();
+        List<User> allUsersFromMyClass = amoService.getAllContactsFromAmo();
+        while(true) {
+            List<Result> allUsersFromTalkMe = talkMeService.getAllUsersFromTalkMe();
+
+            for (Result userTalkMe : allUsersFromTalkMe) {
+                boolean flag = false;
+                for (User userMyClass : allUsersFromMyClass) {
+                    if (userTalkMe.getPhone().equals(userMyClass.getPhone())) {
+                        try {
+                            if (userTalkMe.getTime().isAfter(userMyClass.getTime()) || userMyClass.getTime() == null) {
+                                userMyClass.setTime(userTalkMe.getTime());
+                                messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereUpdateUser(userTalkMe));
+                            }
+                        } catch (Exception ex) {
+
+                        }
+                        flag = true;
+                        break;
+                    }
+                }
+                if (!flag) {
+                    User user = User.builder()
+                            .name(userTalkMe.getName())
+                            .phone(userTalkMe.getPhone())
+                            .email("email@gmail.com")
+                            //.email(userTalkMe.getEmail())
+                            .time(userTalkMe.getTime())
+                            .build();
+                    myClassService.createUser(user);
+                    allUsersFromMyClass.add(user);
+                    messageService.sendMessage(RequestDispatcher.chatId, messageService.getMessageWhereCreateNewUser(userTalkMe));
+                }
+            }
+            Thread.sleep(3600);
+        }
+    }
+
+
+
+
 }
